@@ -1,24 +1,24 @@
-import { Provider } from 'react-redux';
-import { ReactElement } from 'react';
-import styled from 'styled-components';
-import store from '../redux/store';
-// import { fetchPosts } from '../redux/mainSlice';
+import { Provider } from "react-redux";
+import { ReactElement } from "react";
+import initStore from "../redux/store";
+import { fetchPosts } from "../redux/mainSlice";
+import { AppProps } from "next/app";
 
-const MyApp = ({ Component, pageProps }): ReactElement => (
-  <Provider store={store}>
-    <Component {...pageProps} />
-  </Provider>
-);
+const MyApp = ({ Component, pageProps }: AppProps): ReactElement => {
+  const store = initStore(pageProps);
+  return (
+    <Provider store={store}>
+      <Component {...pageProps} />
+    </Provider>
+  );
+};
 
 export default MyApp;
-//
-// if use func below we will get fresh data from server  every
-// page change.
-//
-// MyApp.getInitialProps = async (appContext) => {
-//   const reduxStore = store;
-//   const { dispatch } = reduxStore;
-//   const result = await dispatch(fetchPosts());
-//   const pageProps = result.payload.data;
-//   return { pageProps };
-// };
+
+MyApp.getInitialProps = async () => {
+  const reduxStore = initStore([]);
+  const { dispatch } = reduxStore;
+  const result = await dispatch(fetchPosts());
+  const pageProps = result.payload.data;
+  return { pageProps };
+};

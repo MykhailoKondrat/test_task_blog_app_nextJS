@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { useSelector } from 'react-redux';
-import { ReactElement } from 'react';
-import styled from 'styled-components';
-import Spinner from './spinner';
+import * as React from "react";
+import { useSelector } from "react-redux";
+import { ReactElement } from "react";
+import styled from "styled-components";
+import Spinner from "./spinner";
 
 const Wrapper = styled.div`
   display: flex;

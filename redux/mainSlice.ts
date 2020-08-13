@@ -1,65 +1,34 @@
-import {
-  createSlice, createAsyncThunk, PayloadAction,
-} from '@reduxjs/toolkit';
-import axios from '../utils/axiosInstance';
-import {
-  AppState, MyPost, NewPost, Posts,
-} from '../interfaces/interfaces';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "../utils/axiosInstance";
+import { AppState, MyPost, NewPost, Posts } from "../interfaces/interfaces";
 
-const initialState:AppState = {
+const initialState: AppState = {
   posts: [],
   loading: false,
   error: false,
 };
 
-export const fetchPosts = createAsyncThunk('main/fetchPosts', async () => {
-  const response:Posts = await axios.get('/posts');
+export const fetchPosts = createAsyncThunk("main/fetchPosts", async () => {
+  const response: Posts = await axios.get("/posts");
   return response;
 });
-export const submitPost = createAsyncThunk('main/submitPost', async (data:NewPost) => {
-  const response = await axios.post('/posts', data);
-  return response;
-});
+export const submitPost = createAsyncThunk(
+  "main/submitPost",
+  async (data: NewPost) => {
+    const response = await axios.post("/posts", data);
+    return response;
+  }
+);
 
 export const mainReducer = createSlice({
-  name: 'main',
+  name: "main",
   initialState,
   reducers: {
-    updateState: (state, { payload }:PayloadAction<MyPost[]>) => {
+    updateState: (state, { payload }: PayloadAction<MyPost[]>) => {
       state.posts = payload;
     },
   },
 
-  // without TS - default notation of extra reducers
-  // extraReducers: {
-  //   [fetchPosts.fulfilled]: (state, { payload }) => {
-  //     state.posts = payload.data;
-  //     state.loading = false;
-  //     state.error = false;
-  //   },
-  //   [fetchPosts.pending]: (state) => {
-  //     state.loading = true;
-  //     state.error = false;
-  //   },
-  //   [fetchPosts.rejected]: (state) => {
-  //     state.loading = false;
-  //     state.error = true;
-  //   },
-  //
-  //   [submitPost.fulfilled]: (state, { payload }) => {
-  //     // state.posts = payload.data;
-  //     state.loading = false;
-  //     state.error = false;
-  //   },
-  //   [submitPost.pending]: (state) => {
-  //     state.loading = true;
-  //     state.error = false;
-  //   },
-  //   [submitPost.rejected]: (state, { error }) => {
-  //     state.loading = false;
-  //     state.error = error.message;
-  //   },
-  // },
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.fulfilled, (state, { payload }) => {
       state.posts = payload.data;
