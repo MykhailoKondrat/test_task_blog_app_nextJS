@@ -82,7 +82,11 @@ export default function Home(): ReactElement {
         </section>
       </Wrapper>
 
-      <footer>link to github here</footer>
+      <footer>
+        <a href="https://github.com/MykhailoKondrat/test_task_blog_app_nextJS">
+          View Project on Github
+        </a>
+      </footer>
     </Hoc>
   );
 }
